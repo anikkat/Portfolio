@@ -38,7 +38,6 @@ document.querySelectorAll(".email-copy, .instagram-link").forEach((el) => {
   let tapResetTimer;
   let scrambleTimeout;
 
-  // Desktop: hover scramble
   el.addEventListener("mouseenter", () => {
     scrambleInterval = setInterval(() => {
       el.textContent = scrambleEachWord(el.dataset.originalText);
@@ -50,7 +49,6 @@ document.querySelectorAll(".email-copy, .instagram-link").forEach((el) => {
     el.textContent = el.dataset.originalText;
   });
 
-  // Mobile only
   if ("ontouchstart" in window) {
     el.addEventListener("touchend", (e) => {
       e.preventDefault();
@@ -319,21 +317,42 @@ document.querySelectorAll(".carousel").forEach((carousel) => {
     });
   }
 
-  if (isMobile) {
-    let touchStartX = 0;
-    track.addEventListener("touchstart", (e) => {
-      touchStartX = e.touches[0].clientX;
-    });
-    track.addEventListener("touchend", (e) => {
-      const touchEndX = e.changedTouches[0].clientX;
-      const diff = touchStartX - touchEndX;
-      if (diff > 30) {
-        nextSlide();
-      } else if (diff < -30) {
-        prevSlide();
-      }
-    });
-  }
+if (isMobile) {
+  let touchStartX = 0;
+  let currentTranslate = 0;
+  let dragging = false;
+
+  track.addEventListener("touchstart", (e) => {
+    touchStartX = e.touches[0].clientX;
+    dragging = true;
+    track.style.transition = "none";
+  });
+
+  track.addEventListener("touchmove", (e) => {
+    if (!dragging) return;
+    const touchX = e.touches[0].clientX;
+    const dragDelta = touchX - touchStartX;
+    const offset = -currentIndex * carousel.offsetWidth + dragDelta;
+    track.style.transform = `translateX(${offset}px)`;
+    currentTranslate = dragDelta;
+  });
+
+  track.addEventListener("touchend", () => {
+    dragging = false;
+    track.style.transition = "transform 0.3s ease";
+
+    const threshold = carousel.offsetWidth / 4;
+    if (currentTranslate > threshold) {
+      prevSlide();
+    } else if (currentTranslate < -threshold) {
+      nextSlide();
+    } else {
+      updateCarousel(); // snap back
+    }
+
+    currentTranslate = 0;
+  });
+}
 
   const toggleButton = carousel.querySelector(
     ".sp-toggle-button, .about-toggle-button, .project-gaa-toggle-button"
@@ -379,17 +398,6 @@ document.querySelectorAll(".audio-toggle-btn").forEach((btn) => {
     const isMuted = (video.muted = !video.muted);
     btn.classList.toggle("muted", isMuted);
     btn.classList.toggle("unmuted", !isMuted);
-  });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".carousel").forEach((carousel) => {
-    const firstVideo = carousel.querySelector("video");
-    if (firstVideo) {
-      firstVideo.addEventListener("canplay", () => {
-        firstVideo.play().catch(() => {});
-      });
-    }
   });
 });
 
