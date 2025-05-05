@@ -392,3 +392,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+function playFirstCarouselVideos() {
+  document.querySelectorAll(".carousel").forEach((carousel) => {
+    const firstVideo = carousel.querySelector("video");
+    if (firstVideo) {
+      firstVideo.play().catch(() => {});
+    }
+  });
+  document.removeEventListener("touchstart", playFirstCarouselVideos);
+  document.removeEventListener("click", playFirstCarouselVideos);
+}
+
+document.addEventListener("touchstart", playFirstCarouselVideos, {
+  once: true,
+});
+document.addEventListener("click", playFirstCarouselVideos, { once: true });
