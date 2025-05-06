@@ -19,6 +19,10 @@ let lastClickTimeDesktop = 0;
 let tapCount = 0;
 let lastTapTime = 0;
 
+let touchStartX = 0;
+let touchStartY = 0;
+let touchDidMove = false;
+
 function setup() {
   canvas = createCanvas(window.innerWidth, window.innerHeight);
   canvas.parent(document.body);
@@ -47,13 +51,14 @@ function initializeNewCanvas() {
   newCanvas.rect(0, 0, width, height);
   newCanvas.pop();
 
+  const M = 35;
   newCanvas.push();
   newCanvas.noFill();
   newCanvas.stroke(255);
   newCanvas.strokeWeight(1);
-  newCanvas.rect(50, 50, width - 100, height - 100);
-  newCanvas.line(50, 50, width - 50, height - 50);
-  newCanvas.line(width - 50, 50, 50, height - 50);
+  newCanvas.rect(M, M, width - 2 * M, height - 2 * M);
+  newCanvas.line(M, M, width - M, height - M);
+  newCanvas.line(width - M, M, M, height - M);
   newCanvas.pop();
 
   let mobile = isMobile;
@@ -182,39 +187,55 @@ function mouseClicked() {
   }
 }
 
-function touchEnded(event) {
-  const now = millis();
-  if (now - lastTapTime < 300) {
-    tapCount++;
-  } else {
-    tapCount = 1;
-  }
-  lastTapTime = now;
-  if (tapCount >= 3) {
-    newCanvas.clear();
-    userArray = [];
-    hasInteracted = false;
-    hasCleared = true;
-    canvas.elt.style.pointerEvents = "none";
-    tapCount = 0;
-  }
-  if (!isMobile) {
-    event.preventDefault();
-    return false;
-  }
-}
-
-function touchStarted() {
+function touchStarted(event) {
   if (isMobile && !hasCleared) {
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+    touchDidMove = false;
+
     hasInteracted = true;
     userArray.push({ x: mouseX, y: mouseY });
     return false;
   }
 }
 
-function touchMoved() {
+function touchMoved(event) {
   if (isMobile && !hasCleared) {
+    const dx = event.touches[0].clientX - touchStartX;
+    const dy = event.touches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+      touchDidMove = true;
+    }
+
     userArray.push({ x: mouseX, y: mouseY });
+    return false;
+  }
+}
+
+function touchEnded(event) {
+  if (isMobile) {
+    if (touchDidMove) {
+      touchDidMove = false;
+      return;
+    }
+
+    const now = millis();
+    if (now - lastTapTime < 300) {
+      tapCount++;
+    } else {
+      tapCount = 1;
+    }
+    lastTapTime = now;
+
+    if (tapCount >= 3) {
+      newCanvas.clear();
+      userArray = [];
+      hasInteracted = false;
+      hasCleared = true;
+      canvas.elt.style.pointerEvents = "none";
+      tapCount = 0;
+    }
+
     return false;
   }
 }
