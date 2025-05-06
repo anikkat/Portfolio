@@ -211,10 +211,23 @@ li p {
 
 .toggle-button {
   -webkit-tap-highlight-color: transparent;
-  font-family: "Hanken Grotesk", sans-serif;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  vertical-align: middle;
+  border: 0.8px solid blue;
+  padding: 0.5px 10px;
+  margin-left: 5px;
+  cursor: pointer;
+  font-family: "Hanken Grotesk", sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  color: #ffffff;
+  border-radius: 15px;
+  text-decoration: none;
+}
+
+.toggle-button:hover {
+  border: 0.5px solid #959595;
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -229,58 +242,6 @@ li p {
   }
 }
 
-.sp-toggle-button.toggle-button,
-.about-toggle-button.toggle-button,
-.project-gaa-toggle-button.toggle-button,
-.project-designx-toggle-button.toggle-button,
-.project-bs-toggle-button.toggle-button,
-.project-clown-toggle-button.toggle-button,
-.project-lenore-toggle-button.toggle-button {
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 0.8px solid blue;
-  padding: 0.5px 10px;
-  margin-left: 5px;
-  font-family: "Hanken Grotesk", sans-serif;
-  font-size: 10px;
-  font-weight: 300;
-  color: #ffffff;
-  border-radius: 15px;
-  text-decoration: none;
-}
-
-.sp-toggle-button:hover,
-.about-toggle-button:hover,
-.project-gaa-toggle-button:hover,
-.project-designx-toggle-button:hover,
-.project-bs-toggle-button:hover,
-.project-clown-toggle-button:hover,
-.project-lenore-toggle-button:hover {
-  border: 0.5px solid #959595;
-}
-
-.sp-button-text,
-.about-button-text,
-.project-gaa-button-text,
-.project-designx-button-text,
-.project-bs-button-text,
-.project-clown-button-text,
-.project-lenore-button-text {
-  display: inline-block;
-}
-
-.sp-button-text.ellipsis,
-.about-button-text.ellipsis,
-.project-gaa-button-text.ellipsis,
-.project-designx-button-text.ellipsis,
-.project-bs-button-text.ellipsis,
-.project-clown-button-text.ellipsis,
-.project-lenore-button-text.ellipsis {
-  transform: translateY(-3.5px);
-}
-
 .sp-toggle-content,
 .about-toggle-content,
 .project-gaa-toggle-content,
@@ -290,7 +251,6 @@ li p {
 .project-lenore-toggle-content {
   display: none;
 }
-
 
 .carousel {
   position: relative;
