@@ -199,11 +199,14 @@ li p {
 }
 
 .sp-tag-callouts {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
   border: #ffffff solid 0.5px;
   padding: 4px 6px;
   margin-top: 15px;
   margin-bottom: 10px;
+  line-height: normal;
 }
 
 .toggle-button {
@@ -275,7 +278,7 @@ li p {
 .project-bs-button-text.ellipsis,
 .project-clown-button-text.ellipsis,
 .project-lenore-button-text.ellipsis {
-  transform: translateY(-3px);
+  transform: translateY(-3.5px);
 }
 
 .sp-toggle-content,
@@ -287,6 +290,7 @@ li p {
 .project-lenore-toggle-content {
   display: none;
 }
+
 
 .carousel {
   position: relative;
