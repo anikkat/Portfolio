@@ -319,53 +319,64 @@ document.querySelectorAll(".carousel").forEach((carousel) => {
 
   if (isMobile) {
     let touchStartX = 0;
+    let touchStartY = 0;
     let currentTranslate = 0;
     let dragging = false;
+    let isHorizontal;
 
     track.addEventListener(
       "touchstart",
       function (e) {
         touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isHorizontal = undefined;
         dragging = true;
         track.style.transition = "none";
-        e.preventDefault();
       },
-      { passive: false }
+      { passive: true }
     );
 
     track.addEventListener(
       "touchmove",
       function (e) {
         if (!dragging) return;
-        e.preventDefault();
         const touchX = e.touches[0].clientX;
-        const dragDelta = touchX - touchStartX;
-        const offset = -currentIndex * carousel.offsetWidth + dragDelta;
+        const touchY = e.touches[0].clientY;
+        const dx = touchX - touchStartX;
+        const dy = touchY - touchStartY;
+
+        if (isHorizontal === undefined) {
+          isHorizontal = Math.abs(dx) > Math.abs(dy);
+        }
+        if (!isHorizontal) return;
+
+        e.preventDefault();
+        currentTranslate = dx;
+        const offset = -currentIndex * carousel.offsetWidth + dx;
         track.style.transform = `translateX(${offset}px)`;
-        currentTranslate = dragDelta;
       },
       { passive: false }
     );
 
     track.addEventListener(
       "touchend",
-      function (e) {
-        e.preventDefault();
-        dragging = false;
-        track.style.transition = "transform 0.3s ease";
+      function () {
+        if (isHorizontal) {
+          dragging = false;
+          track.style.transition = "transform 0.3s ease";
 
-        const threshold = carousel.offsetWidth / 4;
-        if (currentTranslate > threshold) {
-          prevSlide();
-        } else if (currentTranslate < -threshold) {
-          nextSlide();
-        } else {
-          updateCarousel();
+          const threshold = carousel.offsetWidth / 4;
+          if (currentTranslate > threshold) {
+            prevSlide();
+          } else if (currentTranslate < -threshold) {
+            nextSlide();
+          } else {
+            updateCarousel();
+          }
         }
-
         currentTranslate = 0;
       },
-      { passive: false }
+      { passive: true }
     );
   }
 
