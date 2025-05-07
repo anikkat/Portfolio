@@ -386,22 +386,24 @@ slides.forEach((slide) => {
     );
   }
 
-  const toggleButton = carousel.querySelector(
-    ".sp-toggle-button, .about-toggle-button, .project-gaa-toggle-button"
-  );
-  const toggleContent = carousel.querySelector(
-    ".sp-toggle-content, .about-toggle-content, .project-gaa-toggle-content"
-  );
+const toggleButton = carousel.querySelector(
+  ".sp-toggle-button, .about-toggle-button, .project-gaa-toggle-button"
+);
+const toggleContent = carousel.querySelector(
+  ".sp-toggle-content, .about-toggle-content, .project-gaa-toggle-content"
+);
 
-  if (toggleButton && toggleContent) {
-    toggleButton.addEventListener("click", () => {
-      const isVisible =
-        window.getComputedStyle(toggleContent).display === "block";
-      if (!isVisible) {
-        resetCarousel();
-      }
-    });
-  }
+if (toggleButton && toggleContent) {
+  toggleButton.addEventListener("click", () => {
+    const isVisible =
+      window.getComputedStyle(toggleContent).display === "block";
+    if (!isVisible) {
+      resetCarousel();
+      const firstVid = toggleContent.querySelector("video");
+      if (firstVid) firstVid.play().catch(() => {});
+    }
+  });
+}
 });
 
 function toggleFootnote(id, toggleEl) {
@@ -449,20 +451,17 @@ document.addEventListener("touchstart", playFirstCarouselVideos, {
 });
 document.addEventListener("click", playFirstCarouselVideos, { once: true });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(({ target: video, isIntersecting }) => {
-      if (isIntersecting) {
-        video.play().catch(() => {});
-      } else {
-        video.pause();
-        video.currentTime = 0;
-      }
-    });
-  },
-  { threshold: 0.5 }
-);
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(({ target: video, isIntersecting }) => {
+    if (isIntersecting) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+      video.currentTime = 0;
+    }
+  });
+}, { threshold: 0.5 });
 
-document.querySelectorAll(".carousel video").forEach((video) => {
+document.querySelectorAll('.carousel video').forEach(video => {
   observer.observe(video);
 });
