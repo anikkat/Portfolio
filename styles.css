@@ -397,3 +397,12 @@ li p {
 .audio-toggle-btn:hover .material-icons {
   color: #ffffff;
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .audio-toggle-btn.muted .icon-unmute {
+    color: #959595;
+  }
+  .audio-toggle-btn.unmuted .icon-mute {
+    color: #959595;
+  }
+}
