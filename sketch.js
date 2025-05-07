@@ -70,10 +70,10 @@ function initializeNewCanvas() {
   let instruction;
   if (mobile) {
     instruction =
-      '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8"/>\n<meta name="viewport" content="width=device-width,\ninitial-scale=1.0"/>\n<title>Katarina Anik</title>\n<link rel="stylesheet" href="styles.css"/>\n</head>\n<body>\n<h1>Freelance graphic designer captivated by motion,\nwith an evolving curiosity for creative coding.</h1>\n</body>\n</html>\n\nTouch and drag to dissolve and reveal,\nor triple tap for immediate disappointment.';
+      '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8"/>\n<meta name="viewport" content="width=device-width,\ninitial-scale=1.0"/>\n<title>Katarina Anik</title>\n<link rel="stylesheet" href="styles.css"/>\n</head>\n<body>\n<h1>Freelance graphic designer captivated by motion,\nwith an evolving curiosity for creative coding.</h1>\n</body>\n</html>\n\nTouch and drag to dissolve/reveal,\nor triple tap for immediate disappointment.';
   } else {
     instruction =
-      '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8"/>\n<meta name="viewport" content="width=device-width,\ninitial-scale=1.0"/>\n<title>Katarina Anik</title>\n<link rel="stylesheet" href="styles.css"/>\n</head>\n<body>\n<h1>Freelance graphic designer captivated by motion,\nwith an evolving curiosity for creative coding.</h1>\n</body>\n</html>\n\nClick and drag to dissolve and reveal,\nor triple click for immediate disappointment.';
+      '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8"/>\n<meta name="viewport" content="width=device-width,\ninitial-scale=1.0"/>\n<title>Katarina Anik</title>\n<link rel="stylesheet" href="styles.css"/>\n</head>\n<body>\n<h1>Freelance graphic designer captivated by motion,\nwith an evolving curiosity for creative coding.</h1>\n</body>\n</html>\n\nClick and drag to dissolve/reveal,\nor triple click for immediate disappointment.';
   }
 
   newCanvas.textFont("New Times Roman, serif");
