@@ -448,3 +448,21 @@ document.addEventListener("touchstart", playFirstCarouselVideos, {
   once: true,
 });
 document.addEventListener("click", playFirstCarouselVideos, { once: true });
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(({ target: video, isIntersecting }) => {
+      if (isIntersecting) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+  },
+  { threshold: 0.5 }
+);
+
+document.querySelectorAll(".carousel video").forEach((video) => {
+  observer.observe(video);
+});
