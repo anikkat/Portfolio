@@ -255,10 +255,11 @@ document.querySelectorAll(".carousel").forEach((carousel) => {
     }
   }
 
-  function prevSlide() {
-    resetCarouselVideos();
-    snapTo(currentIndex - 1);
-  }
+function prevSlide() {
+  resetCarouselVideos();
+  const prevIndex = currentIndex > 0 ? currentIndex - 1 : slides.length - 1;
+  snapTo(prevIndex);
+}
 
   function resetCarousel() {
     currentIndex = 0;
@@ -272,10 +273,15 @@ document.querySelectorAll(".carousel").forEach((carousel) => {
     leftArrow.addEventListener("click", prevSlide);
   }
 
-  slides.forEach((slide) => {
-    slide.addEventListener("click", nextSlide);
-    slide.addEventListener("dragstart", (e) => e.preventDefault());
+slides.forEach((slide) => {
+  slide.addEventListener("click", (e) => {
+    const { left, width } = slide.getBoundingClientRect();
+    const x = e.clientX - left;
+    if (x < width / 2) prevSlide();
+    else nextSlide();
   });
+  slide.addEventListener("dragstart", (e) => e.preventDefault());
+});
 
   if (!isMobile) {
     let isDragging = false;
