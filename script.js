@@ -465,3 +465,13 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.carousel video').forEach(video => {
   observer.observe(video);
 });
+
+function unlockVideos() {
+  document.querySelectorAll(".carousel video").forEach((v) => {
+    v.muted = true;
+    v.playsInline = true;
+    v.play().catch(() => {});
+  });
+  document.body.removeEventListener("touchstart", unlockVideos);
+}
+document.body.addEventListener("touchstart", unlockVideos, { once: true });
