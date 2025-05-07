@@ -215,7 +215,7 @@ li p {
   display: inline-flex;
   align-items: centre;
   justify-content: centre;
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -279,7 +279,19 @@ li p {
 .project-bs-button-text.ellipsis,
 .project-clown-button-text.ellipsis,
 .project-lenore-button-text.ellipsis {
-  transform: translateY(-2.5px);
+  transform: translateY(-3px);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .sp-button-text.ellipsis,
+  .about-button-text.ellipsis,
+  .project-gaa-button-text.ellipsis,
+  .project-designx-button-text.ellipsis,
+  .project-bs-button-text.ellipsis,
+  .project-clown-button-text.ellipsis,
+  .project-lenore-button-text.ellipsis {
+    transform: translateY(-2.5px);
+  }
 }
 
 .sp-toggle-content,
