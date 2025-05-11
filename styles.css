@@ -341,11 +341,11 @@ li p {
 
 .audio-toggle-btn {
   position: absolute;
-  bottom: 0px;
+  bottom: -4px;
   left: 0px;
   background: none;
   border: none;
-  padding: 0;
+  padding: 0px;
   cursor: pointer;
 }
 
@@ -354,7 +354,7 @@ li p {
 }
 
 .audio-toggle-btn.muted .icon-mute {
-  color: #ffffff;
+  color: blue;
 }
 .audio-toggle-btn.muted .icon-unmute {
   color: #959595;
@@ -364,11 +364,11 @@ li p {
   color: #959595;
 }
 .audio-toggle-btn.unmuted .icon-unmute {
-  color: #ffffff;
+  color: blue;
 }
 
 .audio-toggle-btn:hover .material-icons {
-  color: #ffffff;
+  color: blue;
 }
 
 @media (hover: none) and (pointer: coarse) {
