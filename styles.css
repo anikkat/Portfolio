@@ -4,6 +4,7 @@ body {
   padding: 0;
   width: 100vw;
   height: 100vh;
+  background-color: #000000;
 }
 
 .main {
@@ -59,7 +60,7 @@ video::-webkit-media-controls {
   font-weight: 200;
   font-style: normal;
   line-height: 1.4;
-  padding: 32px;
+  padding: 25px;
 }
 
 .cols i {
@@ -155,6 +156,8 @@ li p {
 
 .email-copy,
 .instagram-link {
+  display: inline-block;
+  white-space: nowrap;
   cursor: pointer;
   transition: background-color 0.3s ease;
   padding: 2px 4px;
@@ -169,7 +172,6 @@ li p {
   .email-copy:hover::after {
     content: "↗ copy";
     color: #959595;
-    display: inline-block;
     font-size: inherit;
     margin-left: 1.5px;
   }
@@ -177,7 +179,6 @@ li p {
   .email-copy.copied:hover::after {
     content: "↗ copied";
     color: #959595;
-    display: inline-block;
     font-size: inherit;
     margin-left: 1.5px;
   }
@@ -185,7 +186,6 @@ li p {
   .instagram-link:hover::after {
     content: "↗ external";
     color: #959595;
-    display: inline-block;
     font-size: inherit;
     margin-left: 1.5px;
   }
@@ -204,62 +204,51 @@ li p {
   vertical-align: middle;
   border: #ffffff solid 0.5px;
   padding: 4px 6px;
-  margin-top: 15px;
   margin-bottom: 10px;
   line-height: normal;
 }
 
 .toggle-button {
-  -webkit-tap-highlight-color: transparent;
-  font-family: "Hanken Grotesk", sans-serif;
+  line-height: 0.5; 
+  box-sizing: border-box;
+  border-radius: 9px;
+  padding: 4px 10px; 
   display: inline-flex;
-  align-items: centre;
-  justify-content: centre;
-  vertical-align: middle !important;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid blue;
+  margin-left: 5px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.sp-button-text.nudge,
+.about-button-text.nudge,
+.project-gaa-button-text.nudge,
+.project-designx-button-text.nudge,
+.project-bs-button-text.nudge,
+.project-clown-button-text.nudge,
+.project-lenore-button-text.nudge {
+  display: inline-block;
+  position: relative;
+  top: -0.08em;
+}
+
+.toggle-button:hover {
+  border: 0.5px solid #959595;
 }
 
 @media (hover: none) and (pointer: coarse) {
   .toggle-button,
   .toggle-button.toggled-active {
-    border: 0.8px solid blue !important;
+    border: 0.5px solid blue !important;
     background-color: transparent !important;
   }
   .toggle-button:active {
     border-color: blue !important;
     background-color: transparent !important;
   }
-}
-
-.sp-toggle-button.toggle-button,
-.about-toggle-button.toggle-button,
-.project-gaa-toggle-button.toggle-button,
-.project-designx-toggle-button.toggle-button,
-.project-bs-toggle-button.toggle-button,
-.project-clown-toggle-button.toggle-button,
-.project-lenore-toggle-button.toggle-button {
-  cursor: pointer;
-  display: inline-grid !important;
-  /* center content in the single grid cell */
-  place-items: center !important;
-  border: 0.8px solid blue;
-  padding: 0.5px 10px;
-  margin-left: 5px;
-  font-family: "Hanken Grotesk", sans-serif;
-  font-size: 10px;
-  font-weight: 300;
-  color: #ffffff;
-  border-radius: 15px;
-  text-decoration: none;
-}
-
-.sp-toggle-button:hover,
-.about-toggle-button:hover,
-.project-gaa-toggle-button:hover,
-.project-designx-toggle-button:hover,
-.project-bs-toggle-button:hover,
-.project-clown-toggle-button:hover,
-.project-lenore-toggle-button:hover {
-  border: 0.5px solid #959595;
 }
 
 .sp-button-text,
@@ -270,28 +259,6 @@ li p {
 .project-clown-button-text,
 .project-lenore-button-text {
   display: inline-block;
-}
-
-.sp-button-text.ellipsis,
-.about-button-text.ellipsis,
-.project-gaa-button-text.ellipsis,
-.project-designx-button-text.ellipsis,
-.project-bs-button-text.ellipsis,
-.project-clown-button-text.ellipsis,
-.project-lenore-button-text.ellipsis {
-  transform: translateY(-3px);
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .sp-button-text.ellipsis,
-  .about-button-text.ellipsis,
-  .project-gaa-button-text.ellipsis,
-  .project-designx-button-text.ellipsis,
-  .project-bs-button-text.ellipsis,
-  .project-clown-button-text.ellipsis,
-  .project-lenore-button-text.ellipsis {
-    transform: translateY(-2.5px);
-  }
 }
 
 .sp-toggle-content,
@@ -309,6 +276,7 @@ li p {
   overflow: hidden;
   width: 100%;
   user-select: none;
+  margin-bottom: 10px;
 }
 
 .carousel-track {
@@ -317,31 +285,36 @@ li p {
   will-change: transform;
 }
 
-.carousel-arrow {
-  display: block;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  font-size: 15px;
-  color: #ffffff;
-  padding: 3px;
-  cursor: pointer;
-}
-
-.carousel-arrow.left {
-  left: 1px;
-}
-
-.carousel-arrow.right {
-  right: 1px;
-}
-
 .sp-images::-webkit-media-controls,
 .sp-images::-webkit-media-controls-panel,
 .sp-images::-webkit-media-controls-play-button {
   display: none !important;
+}
+
+.carousel-indicators {
+  text-align: left;
+  margin-top: 8px;
+}
+
+.carousel-indicator {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background: #959595;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.carousel-indicator.active {
+  border: 0.5px solid blue;
+  background: none;
+}
+
+.carousel-indicator:hover {
+  border: 0.5px solid #959595;
+  background: none;
 }
 
 .carousel-track > #canvas-container {
