@@ -330,10 +330,20 @@ li p {
 }
 
 @media (hover: none) and (pointer: coarse) {
-  .carousel-indicator:hover,
-  .carousel-indicator:active {
-    border: 0.5px solid blue !important;
+  .carousel-indicator {
+    background-color: #959595 !important;
+    border: none !important;
+  }
+
+  .carousel-indicator.active {
     background: none !important;
+    border: 0.5px solid blue !important;
+  }
+
+  .carousel-indicator:active,
+  .carousel-indicator:focus {
+    background: none !important;
+    border: 0.5px solid blue !important;
   }
 }
 
