@@ -330,11 +330,10 @@ li p {
 }
 
 @media (hover: none) and (pointer: coarse) {
-  .carousel-indicator {
-    -webkit-tap-highlight-color: transparent;
-  }
+  .carousel-indicator:hover,
   .carousel-indicator:active {
-    background-color: #959595 !important;
+    border: 0.5px solid blue !important;
+    background: none !important;
   }
 }
 
