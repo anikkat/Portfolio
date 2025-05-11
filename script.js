@@ -1,8 +1,18 @@
+if (
+  /Mobi|Android/i.test(navigator.userAgent) &&
+  "scrollRestoration" in history
+) {
+  history.scrollRestoration = "manual";
+  window.addEventListener("pageshow", () => {
+    window.scrollTo(0, 0);
+  });
+}
+
 const emailCopy = document.querySelector(".email-copy");
 if (emailCopy) {
   emailCopy.addEventListener("click", (e) => {
     e.stopPropagation();
-    const emailText = "[katanik.des@gmail.com](mailto:katanik.des@gmail.com)";
+    const emailText = "katanik.des@gmail.com";
     navigator.clipboard
       .writeText(emailText)
       .then(() => {
@@ -32,6 +42,7 @@ function scrambleEachWord(text) {
 }
 
 document.querySelectorAll(".email-copy, .instagram-link").forEach((el) => {
+  
   el.dataset.originalText = el.textContent;
   let scrambleInterval;
   let tappedOnce = false;
@@ -112,12 +123,12 @@ toggleButtons.forEach((button) => {
       toggleContent.style.display = isHidden ? "block" : "none";
 
       if (isHidden) {
-        buttonText.textContent = "less";
-        buttonText.classList.remove("ellipsis");
+        buttonText.textContent = "-";
+        buttonText.classList.remove("nudge");
         button.classList.add("toggled-active");
       } else {
-        buttonText.textContent = "...";
-        buttonText.classList.add("ellipsis");
+        buttonText.textContent = "+";
+        buttonText.classList.add("nudge");
         button.classList.remove("toggled-active");
       }
 
@@ -211,14 +222,27 @@ toggleButtons.forEach((button) => {
 document.querySelectorAll(".carousel").forEach((carousel) => {
   const track = carousel.querySelector(".carousel-track");
   const slides = carousel.querySelectorAll("img, video, #canvas-container");
-  const leftArrow = carousel.querySelector(".carousel-arrow.left");
-  const rightArrow = carousel.querySelector(".carousel-arrow.right");
   let currentIndex = 0;
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+  const indicators = document.createElement("div");
+  indicators.className = "carousel-indicators";
+  slides.forEach((_, i) => {
+    const dot = document.createElement("span");
+    dot.className = "carousel-indicator";
+    dot.addEventListener("click", () => snapTo(i));
+    indicators.append(dot);
+  });
+  carousel.append(indicators);
+  updateCarousel(); 
 
   function updateCarousel() {
     track.style.transition = "transform 0.3s ease";
     track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+    indicators
+      .querySelectorAll(".carousel-indicator")
+      .forEach((dot, i) => dot.classList.toggle("active", i === currentIndex));
   }
 
   function snapTo(index) {
@@ -255,33 +279,26 @@ document.querySelectorAll(".carousel").forEach((carousel) => {
     }
   }
 
-function prevSlide() {
-  resetCarouselVideos();
-  const prevIndex = currentIndex > 0 ? currentIndex - 1 : slides.length - 1;
-  snapTo(prevIndex);
-}
+  function prevSlide() {
+    resetCarouselVideos();
+    const prevIndex = currentIndex > 0 ? currentIndex - 1 : slides.length - 1;
+    snapTo(prevIndex);
+  }
 
   function resetCarousel() {
     currentIndex = 0;
     updateCarousel();
   }
 
-  if (rightArrow) {
-    rightArrow.addEventListener("click", nextSlide);
-  }
-  if (leftArrow) {
-    leftArrow.addEventListener("click", prevSlide);
-  }
-
-slides.forEach((slide) => {
-  slide.addEventListener("click", (e) => {
-    const { left, width } = slide.getBoundingClientRect();
-    const x = e.clientX - left;
-    if (x < width / 2) prevSlide();
-    else nextSlide();
+  slides.forEach((slide) => {
+    slide.addEventListener("click", (e) => {
+      const { left, width } = slide.getBoundingClientRect();
+      const x = e.clientX - left;
+      if (x < width / 2) prevSlide();
+      else nextSlide();
+    });
+    slide.addEventListener("dragstart", (e) => e.preventDefault());
   });
-  slide.addEventListener("dragstart", (e) => e.preventDefault());
-});
 
   if (!isMobile) {
     let isDragging = false;
@@ -386,24 +403,24 @@ slides.forEach((slide) => {
     );
   }
 
-const toggleButton = carousel.querySelector(
-  ".sp-toggle-button, .about-toggle-button, .project-gaa-toggle-button"
-);
-const toggleContent = carousel.querySelector(
-  ".sp-toggle-content, .about-toggle-content, .project-gaa-toggle-content"
-);
+  const toggleButton = carousel.querySelector(
+    ".sp-toggle-button, .about-toggle-button, .project-gaa-toggle-button"
+  );
+  const toggleContent = carousel.querySelector(
+    ".sp-toggle-content, .about-toggle-content, .project-gaa-toggle-content"
+  );
 
-if (toggleButton && toggleContent) {
-  toggleButton.addEventListener("click", () => {
-    const isVisible =
-      window.getComputedStyle(toggleContent).display === "block";
-    if (!isVisible) {
-      resetCarousel();
-      const firstVid = toggleContent.querySelector("video");
-      if (firstVid) firstVid.play().catch(() => {});
-    }
-  });
-}
+  if (toggleButton && toggleContent) {
+    toggleButton.addEventListener("click", () => {
+      const isVisible =
+        window.getComputedStyle(toggleContent).display === "block";
+      if (!isVisible) {
+        resetCarousel();
+        const firstVid = toggleContent.querySelector("video");
+        if (firstVid) firstVid.play().catch(() => {});
+      }
+    });
+  }
 });
 
 function toggleFootnote(id, toggleEl) {
@@ -414,16 +431,16 @@ function toggleFootnote(id, toggleEl) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.querySelector(".sp-toggle-button");
   const content = document.querySelector(".sp-toggle-content");
-  const btnText = document.querySelector(".sp-toggle-button .sp-button-text");
+  const btnText = toggleBtn.querySelector(".sp-button-text");
   const tags = document.getElementById("gd-tags");
 
   content.style.display = "block";
-  btnText.textContent = "less";
-  btnText.classList.remove("ellipsis");
-  if (tags) {
-    tags.style.display = "none";
-  }
+  btnText.textContent = "–";
+  btnText.classList.remove("nudge");
+  toggleBtn.classList.add("toggled-active");
+  if (tags) tags.style.display = "none";
 });
 
 document.querySelectorAll(".audio-toggle-btn").forEach((btn) => {
@@ -451,18 +468,21 @@ document.addEventListener("touchstart", playFirstCarouselVideos, {
 });
 document.addEventListener("click", playFirstCarouselVideos, { once: true });
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(({ target: video, isIntersecting }) => {
-    if (isIntersecting) {
-      video.play().catch(() => {});
-    } else {
-      video.pause();
-      video.currentTime = 0;
-    }
-  });
-}, { threshold: 0.5 });
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(({ target: video, isIntersecting }) => {
+      if (isIntersecting) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+  },
+  { threshold: 0.5 }
+);
 
-document.querySelectorAll('.carousel video').forEach(video => {
+document.querySelectorAll(".carousel video").forEach((video) => {
   observer.observe(video);
 });
 
@@ -475,3 +495,24 @@ function unlockVideos() {
   document.body.removeEventListener("touchstart", unlockVideos);
 }
 document.body.addEventListener("touchstart", unlockVideos, { once: true });
+
+function playFirstCarouselVideos() {
+  document.querySelectorAll(".carousel video").forEach((v) => {
+    v.play().catch(() => {});
+  });
+  document.removeEventListener("touchstart", playFirstCarouselVideos);
+  document.removeEventListener("click", playFirstCarouselVideos);
+}
+document.addEventListener("touchstart", playFirstCarouselVideos, {
+  once: true,
+});
+document.addEventListener("click", playFirstCarouselVideos, { once: true });
+
+window.addEventListener("pageshow", () => {
+  if (/Mobi|Android/i.test(navigator.userAgent)) {
+    document.addEventListener("touchstart", playFirstCarouselVideos, {
+      once: true,
+    });
+    document.addEventListener("click", playFirstCarouselVideos, { once: true });
+  }
+});
