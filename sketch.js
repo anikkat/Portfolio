@@ -56,7 +56,7 @@ function initializeNewCanvas() {
   newCanvas.rect(0, 0, width, height);
   newCanvas.pop();
 
-  const M = 35;
+  const M = 25;
   newCanvas.push();
   newCanvas.noFill();
   newCanvas.stroke(255);
