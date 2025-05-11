@@ -235,6 +235,18 @@ li p {
   top: -0.08em;
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .sp-button-text.nudge,
+  .about-button-text.nudge,
+  .project-gaa-button-text.nudge,
+  .project-designx-button-text.nudge,
+  .project-bs-button-text.nudge,
+  .project-clown-button-text.nudge,
+  .project-lenore-button-text.nudge {
+    top: 0 !important;
+  }
+}
+
 .toggle-button:hover {
   border: 0.5px solid #959595;
 }
@@ -315,6 +327,15 @@ li p {
 .carousel-indicator:hover {
   border: 0.5px solid #959595;
   background: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .carousel-indicator {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .carousel-indicator:active {
+    background-color: #959595 !important;
+  }
 }
 
 .carousel-track > #canvas-container {
