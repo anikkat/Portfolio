@@ -42,7 +42,6 @@ function scrambleEachWord(text) {
 }
 
 document.querySelectorAll(".email-copy, .instagram-link").forEach((el) => {
-  
   el.dataset.originalText = el.textContent;
   let scrambleInterval;
   let tappedOnce = false;
@@ -224,7 +223,7 @@ document.querySelectorAll(".carousel").forEach((carousel) => {
   const slides = carousel.querySelectorAll("img, video, #canvas-container");
   let currentIndex = 0;
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    let recentlyDragged = false;
+  let recentlyDragged = false;
 
   const indicators = document.createElement("div");
   indicators.className = "carousel-indicators";
@@ -291,17 +290,16 @@ document.querySelectorAll(".carousel").forEach((carousel) => {
     updateCarousel();
   }
 
-slides.forEach((slide) => {
-  slide.addEventListener("dragstart", (e) => e.preventDefault());
-  slide.addEventListener("click", (e) => {
-    // <-- ignore this click if it immediately followed a drag
-    if (!isMobile && recentlyDragged) return;
-    const { left, width } = slide.getBoundingClientRect();
-    const x = e.clientX - left;
-    if (x < width / 2) prevSlide();
-    else nextSlide();
+  slides.forEach((slide) => {
+    slide.addEventListener("dragstart", (e) => e.preventDefault());
+    slide.addEventListener("click", (e) => {
+      if (!isMobile && recentlyDragged) return;
+      const { left, width } = slide.getBoundingClientRect();
+      const x = e.clientX - left;
+      if (x < width / 2) prevSlide();
+      else nextSlide();
+    });
   });
-});
 
   if (!isMobile) {
     let isDragging = false;
@@ -317,34 +315,30 @@ slides.forEach((slide) => {
     });
 
     track.addEventListener("mousemove", (e) => {
-      if (!isDragging) {
-        return;
-      }
+      if (!isDragging) return;
       dragDelta = e.clientX - dragStartX;
       const offset = -currentIndex * carousel.offsetWidth + dragDelta;
       track.style.transform = `translateX(${offset}px)`;
     });
 
-window.addEventListener("mouseup", () => {
-  if (!isDragging) return;
-  isDragging = false;
+    window.addEventListener("mouseup", () => {
+      if (!isDragging) return;
+      isDragging = false;
 
-  const threshold = carousel.offsetWidth / 4;
-
-  if (dragDelta > threshold) {
-    prevSlide();
-    recentlyDragged = true;
-    setTimeout(() => (recentlyDragged = false), 0);
-  } else if (dragDelta < -threshold) {
-    nextSlide();
-    recentlyDragged = true;
-    setTimeout(() => (recentlyDragged = false), 0);
-  } else {
-    updateCarousel();
-  }
-
-  dragDelta = 0;
-});
+      const threshold = carousel.offsetWidth / 4;
+      if (dragDelta > threshold) {
+        prevSlide();
+        recentlyDragged = true;
+        setTimeout(() => (recentlyDragged = false), 0);
+      } else if (dragDelta < -threshold) {
+        nextSlide();
+        recentlyDragged = true;
+        setTimeout(() => (recentlyDragged = false), 0);
+      } else {
+        updateCarousel();
+      }
+      dragDelta = 0;
+    });
   }
 
   if (isMobile) {
@@ -394,15 +388,10 @@ window.addEventListener("mouseup", () => {
         if (isHorizontal) {
           dragging = false;
           track.style.transition = "transform 0.3s ease";
-
           const threshold = carousel.offsetWidth / 4;
-          if (currentTranslate > threshold) {
-            prevSlide();
-          } else if (currentTranslate < -threshold) {
-            nextSlide();
-          } else {
-            updateCarousel();
-          }
+          if (currentTranslate > threshold) prevSlide();
+          else if (currentTranslate < -threshold) nextSlide();
+          else updateCarousel();
         }
         currentTranslate = 0;
       },
@@ -502,24 +491,3 @@ function unlockVideos() {
   document.body.removeEventListener("touchstart", unlockVideos);
 }
 document.body.addEventListener("touchstart", unlockVideos, { once: true });
-
-function playFirstCarouselVideos() {
-  document.querySelectorAll(".carousel video").forEach((v) => {
-    v.play().catch(() => {});
-  });
-  document.removeEventListener("touchstart", playFirstCarouselVideos);
-  document.removeEventListener("click", playFirstCarouselVideos);
-}
-document.addEventListener("touchstart", playFirstCarouselVideos, {
-  once: true,
-});
-document.addEventListener("click", playFirstCarouselVideos, { once: true });
-
-window.addEventListener("pageshow", () => {
-  if (/Mobi|Android/i.test(navigator.userAgent)) {
-    document.addEventListener("touchstart", playFirstCarouselVideos, {
-      once: true,
-    });
-    document.addEventListener("click", playFirstCarouselVideos, { once: true });
-  }
-});
