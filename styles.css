@@ -370,7 +370,10 @@ li p {
 }
 
 .audio-toggle-btn {
+  display: flex;
+  flex-direction: row;
   position: absolute;
+  gap: 1px;
   bottom: -4px;
   left: 0px;
   background: none;
@@ -380,7 +383,7 @@ li p {
 }
 
 .audio-toggle-btn .material-icons {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .audio-toggle-btn.muted .icon-mute {
