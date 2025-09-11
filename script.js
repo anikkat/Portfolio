@@ -110,7 +110,7 @@ const toggleButtons = document.querySelectorAll(".toggle-button");
 
 toggleButtons.forEach((button) => {
   const buttonText = button.querySelector(
-    ".sp-button-text, .about-button-text, .project-gaa-button-text, .project-designx-button-text, .project-bs-button-text, .project-clown-button-text, .project-lenore-button-text"
+    ".sp-button-text, .about-button-text, .project-gaa-button-text, .project-designx-button-text, .project-bs-button-text, .project-clown-button-text, .project-lenore-button-text, .project-westgate-button-text"
   );
   const targetSelector = button.getAttribute("data-target");
   const toggleContent = document.querySelector(targetSelector);
