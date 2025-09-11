@@ -229,7 +229,8 @@ li p {
 .project-designx-button-text.nudge,
 .project-bs-button-text.nudge,
 .project-clown-button-text.nudge,
-.project-lenore-button-text.nudge {
+.project-lenore-button-text.nudge,
+.project-westgate-button-text.nudge {
   display: inline-block;
   position: relative;
   top: -0.08em;
@@ -242,7 +243,8 @@ li p {
   .project-designx-button-text.nudge,
   .project-bs-button-text.nudge,
   .project-clown-button-text.nudge,
-  .project-lenore-button-text.nudge {
+  .project-lenore-button-text.nudge,
+  .project-westgate-button-text.nudge {
   top: -0.07em !important;
   }
 }
@@ -269,7 +271,8 @@ li p {
 .project-designx-button-text,
 .project-bs-button-text,
 .project-clown-button-text,
-.project-lenore-button-text {
+.project-lenore-button-text,
+.project-westgate-button-text {
   display: inline-block;
 }
 
@@ -279,7 +282,8 @@ li p {
 .project-designx-toggle-content,
 .project-bs-toggle-content,
 .project-clown-toggle-content,
-.project-lenore-toggle-content {
+.project-lenore-toggle-content,
+.project-westgate-toggle-content {
   display: none;
 }
 
